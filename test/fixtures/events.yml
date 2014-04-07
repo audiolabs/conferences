@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  eventstart: 2012-06-21
+  eventend: 2012-06-21
+  precisdeadline: 2012-06-21
+  fullpaperdeadline: 2012-06-21
+  city: MyString
+  comments: MyText
+
+two:
+  name: MyString
+  eventstart: 2012-06-21
+  eventend: 2012-06-21
+  precisdeadline: 2012-06-21
+  fullpaperdeadline: 2012-06-21
+  city: MyString
+  comments: MyText

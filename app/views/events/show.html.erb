@@ -1,0 +1,112 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <h1><%= link_to @event.name, @event.conferenceurl %> 	<%= link_to "iCal + deadlines", { :controller => 'events', :action => 'show', :format => :ics, :only_path => false}, :class => "new_button" %>
+</h1>
+  <h2><%= @event.nameLong %> </h2>
+  <h3><%= duration(@event) %></h3>
+
+</p>
+
+
+<p>
+  <b>Precisdeadline:</b>
+  <%= precisdeadline(@event) %>
+</p>
+
+<p>
+  <b>Fullpaperdeadline:</b>
+  <%= fullpaperdeadline(@event) %>
+</p>  
+<p>
+  <b>H-Index:</b>
+  <%= @event.hindex %>
+</p>
+<p>
+  <b>Conference is peer reviewed:</b>
+  <%= @event.peerreviewed %>
+</p>
+<p>
+  <b>City:</b>
+  <%= @event.city %>
+</p>
+
+<p>
+  <b>Country:</b>
+  <%= @event.country %>
+</p>
+
+<p>
+	<b>Distance to Erlangen:</b>
+<%= @event.distance_to("Erlangen, Tennenlohe",units = :km).round(2) %> km
+</p>
+
+<p>
+  <b>Comments:</b>
+  <%= @event.comments %>
+</p>
+
+<p>
+  <b>Tags:</b>
+  <%= join_tags(@event) %>
+</p>
+
+<p>
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=920x500&sensor=false&zoom=4&markers=#{@event.latitude}%2C#{@event.longitude}" %>
+</p>
+
+<h3>Nearby Conferences</h3>
+<ul>
+<% for event in @nearbylocations %>
+  <li><%= link_to event.address, event %> (<%= event.distance.round(2) %> km)</li>
+<% end %>
+</ul>
+
+<h2>Attendees</h2>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Planningtosubmit</th>
+    <th>Submitted</th>
+    <th>Accepted</th>
+    <th>Attending</th>
+	<th></th>
+  </tr>
+
+<% @event.attendances.each do |attendance| %>
+  <tr>
+    <td><%= attendance.name %></td>
+    <td><%= attendance.planningtosubmit %></td>
+    <td><%= attendance.submitted %></td>
+    <td><%= attendance.accepted %></td>
+    <td><%= attendance.attending %></td>
+	<td><%= link_to 'Delete', [attendance.event, attendance],
+               :confirm => 'Are you sure?',
+               :method => :delete %> 
+		    <%= link_to 'Edit', edit_event_attendance_path(@event,attendance) %>
+</td>
+  </tr>
+<% end %>
+</table>
+
+<h2>Add an Attendee:</h2>
+
+<table>
+<%= form_for([@event, @event.attendances.build]) do |f| %>
+
+<tr>
+    <td>Name <%= f.text_field :name %></td>
+	<td>Planning to submit a paper <%= f.check_box :planningtosubmit %></td>
+	<td>Paper submitted <%= f.check_box :submitted %></td>
+	<td>Paper accepted  <%= f.check_box :accepted %></td>	
+	<td>Attending Conference <%= f.check_box :attending %></td>
+ </tr>
+</table>
+<div class="actions">
+  <%= f.submit %>
+</div>
+<% end %>
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>

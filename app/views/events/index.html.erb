@@ -1,0 +1,105 @@
+<%= content_for :body_attributes %>
+
+<%= link_to 'Wanna publish something soon?', @nextByDeadline, :class => "new_button" %>
+
+<h2>Upcoming Conferences <%= link_to "iCal", { :controller => 'events', :action => 'index', :format => :ics, :only_path => false, :protocol => "webcal"}, :class => "new_button" %>
+						 <%= link_to "iCal (+Deadlines)", { :controller => 'events', :action => 'index', :format => :ics, :only_path => false, :protocol => "webcal", :deadlines => true}, :class => "new_button", :style => "background-color:#3383B8" %>
+</h2>
+
+
+<table class="conferencetable">
+  <tr>
+	<th></th>
+    <th>Name</th>
+    <th></th>
+
+    <th>Date</th>
+    <th>Precis Deadline</th>
+    <th>Paper Deadline</th>
+    <th>Location</th>
+    <th>People</th>
+    <th></th>
+  </tr>
+
+<% @events.each do |event| %>
+  <tr>
+    <td><% unless event.callforpapersurl.empty? %> <%= link_to 'CfP', event.callforpapersurl ,:class => 'btn btn-default' %> <% end %> </td>
+	<td><%= link_to truncate(event.name, :length => 20), event.conferenceurl, :title => event.nameLong %> <%= ispeerreviewed(event) %>
+	</td>
+	<td><%= link_to 'Details', event ,:class => 'btn btn-default'  %></td>
+    <td><%= duration(event) %></td>
+<% if event.precisdeadline < Date.today %>
+	<td style="text-decoration: line-through;"><%= precisdeadline(event) %></td>
+<% else %>
+	<td style="color:rgb(<%= (event.precisdeadline - Date.today).to_i*-(255/90)+255 %>,0,0)">
+		<%= precisdeadline(event) %>		
+	</td>
+<% end %>
+
+<% if event.fullpaperdeadline < Date.today %>
+	<td style="text-decoration: line-through;"><%= fullpaperdeadline(event) %></td>
+<% else %>
+	<td style="color:rgb(<%= (event.fullpaperdeadline - Date.today).to_i*-(255/90)+255 %>,0,0)">
+		<%= fullpaperdeadline(event) %>
+	</td>
+<% end %>
+    <td><%= truncate(event.address, :length => 20) %></td>
+	<td><%= event.attendances.count  %>
+	
+    <td style="float:right">
+	<%= link_to 'iCal', { :id => event, :controller => 'events', :action => 'show', :format => :ics}, :class => "tiny_button" %>
+    <%= link_to 'Edit', edit_event_path(event), :class => "tiny_button"  %>
+    <%= link_to '-', event, method: :delete, data: { confirm: 'Are you sure?' }, :class => "tiny_button_red"  %>
+	
+	</td>
+  </tr>
+<% end %>
+
+</table>
+
+<h2>Past Conferences</h2>
+
+<table class="conferencetable">
+  <tr>
+    <th>Name</th>
+    <th>Date</th>
+    <th></th>
+    <th></th>
+    <th>Location</th>
+    <th></th>
+  </tr>
+
+<% @past.each do |event| %>
+  <tr>
+    <td><%= link_to event.name, event.conferenceurl %></td>
+    <td><%= duration(event) %></td>
+	<td></td>
+	<td></td>
+    <td><%= event.address %></td>
+    <td style="float:right"><%= link_to 'Details', event, :class => "tiny_button" %>
+    <%= link_to 'Edit', edit_event_path(event), :class => "tiny_button" %>
+    <%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' }, :class => "tiny_button_red"%></td>
+  </tr>
+<% end %>
+
+</table>
+<div class="pagination">
+	<%= will_paginate @past, :param_name => 'past_page' %>
+</div>
+
+<br />
+
+<h2>Tags</h2>
+<div id="tag_cloud">
+  <% tag_cloud Event.tag_counts, %w{s m l} do |tag, css_class| %>
+    <%= link_to tag.name, tag_path(tag.name), class: css_class %>
+  <% end %>
+</div>
+
+<br />
+<br />
+
+
+
+
+<%= link_to 'Add conference', new_event_path, :class => "new_button" %>
