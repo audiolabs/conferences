@@ -1,58 +1,41 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <h1><%= link_to @event.name, @event.conferenceurl %> 	<%= link_to "iCal + deadlines", { :controller => 'events', :action => 'show', :format => :ics, :only_path => false}, :class => "new_button" %>
+  <h1><%= @event.name %> 	<%= link_to "Add to iCal", { :controller => 'events', :action => 'show', :format => :ics, :only_path => false}, :class => "btn btn-default" %>
 </h1>
   <h2><%= @event.nameLong %> </h2>
   <h3><%= duration(@event) %></h3>
-
 </p>
 
+<dl class="dl-horizontal">
+  <dt><b>Precis deadline:</b></dt>
+  <dd><%= precisdeadline(@event) %></dd>
+  
+  <dt><b>Full-paper deadline:</b></dt>
+  <dd><%= fullpaperdeadline(@event) %></dd>
+  
+  <dt><b>H-Index:</b></dt>
+  <dd><%= @event.hindex %></dd>
+  
+  <dt><b>Is peer reviewed:</b></dt>
+  <dd><%= @event.peerreviewed %></dd>
+  
+  <dt><b>City:</b></dt>
+  <dd><%= @event.city %></dd>
+   
+  <dt><b>Country:</b></dt>
+  <dd><%= @event.country %></dd>
+  
+  <dt><b>Comments:</b></dt>
+  <dd><%= @event.comments %></dd>
+  
+  <dt><b>Tags:</b></dt>
+  <dd><%= join_tags(@event) %></dd>
+</dl>
+<p>
 
 <p>
-  <b>Precisdeadline:</b>
-  <%= precisdeadline(@event) %>
-</p>
-
-<p>
-  <b>Fullpaperdeadline:</b>
-  <%= fullpaperdeadline(@event) %>
-</p>  
-<p>
-  <b>H-Index:</b>
-  <%= @event.hindex %>
-</p>
-<p>
-  <b>Conference is peer reviewed:</b>
-  <%= @event.peerreviewed %>
-</p>
-<p>
-  <b>City:</b>
-  <%= @event.city %>
-</p>
-
-<p>
-  <b>Country:</b>
-  <%= @event.country %>
-</p>
-
-<p>
-	<b>Distance to Erlangen:</b>
-<%= @event.distance_to("Erlangen, Tennenlohe",units = :km).round(2) %> km
-</p>
-
-<p>
-  <b>Comments:</b>
-  <%= @event.comments %>
-</p>
-
-<p>
-  <b>Tags:</b>
-  <%= join_tags(@event) %>
-</p>
-
-<p>
-<%= image_tag "http://maps.google.com/maps/api/staticmap?size=920x500&sensor=false&zoom=4&markers=#{@event.latitude}%2C#{@event.longitude}" %>
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=900x500&sensor=false&zoom=4&markers=#{@event.latitude}%2C#{@event.longitude}" %>
 </p>
 
 <h2>Attendees</h2>
@@ -75,10 +58,19 @@
     <td><%= check_box_tag '', attendance.id, attendance.submitted , disabled: true %></td>
     <td><%= check_box_tag '', attendance.id, attendance.accepted , disabled: true %></td>
     <td><%= check_box_tag '', attendance.id, attendance.attending , disabled: true %></td>
-	<td><%= link_to 'Delete', [attendance.event, attendance],
-               :confirm => 'Are you sure?',
-               :method => :delete %> 
-		    <%= link_to 'Edit', edit_event_attendance_path(@event,attendance) %>
+	<td>
+	
+			<div class="btn-toolbar" role="toolbar">
+		      <div class="btn-group-xs">
+				<%= link_to edit_event_attendance_path(@event,attendance), class: "btn btn-default" do %>
+				    <i class="glyphicon glyphicon-pencil"></i>
+				<% end %>  
+				<%= link_to 'Delete', [attendance.event, attendance],
+		               :confirm => 'Are you sure?',
+		               :method => :delete,  class: "btn btn-danger" %>
+				
+		      </div>
+		    </div>
 </td>
   </tr>
 <% end %>
@@ -87,18 +79,24 @@
 
 <h2>Add an Attendee:</h2>
 
-<%= form_for([@event, @event.attendances.build]) do |f| %>
-<table>
+<%= form_for([@event, @event.attendances.build], html: { class: 'form-horizontal' }) do |f| %>
+  <div class="form-group">
+   Name <%= f.text_field :name,:class => 'form-control' %>
+  </div>
+  <div class="form-group">
+  	<%= f.check_box :planningtosubmit %> Planning to submit a paper 
+  </div>
+  <div class="form-group">
+   <%= f.check_box :submitted %> Paper submitted 
+  </div>
+  <div class="form-group">
+    <%= f.check_box :accepted %> Paper accepted 
+  </div>
+   <div class="form-group">
+   <%= f.check_box :attending %> Attending Conference 
+   </div>
 
-<tr>
-    <td>Name <%= f.text_field :name %></td>
-	<td>Planning to submit a paper <%= f.check_box :planningtosubmit %></td>
-	<td>Paper submitted <%= f.check_box :submitted %></td>
-	<td>Paper accepted  <%= f.check_box :accepted %></td>	
-	<td>Attending Conference <%= f.check_box :attending %></td>
- </tr>
-</table>
-<p>
+ <p>
   <%= f.submit 'Add Attendee', :class => 'btn btn-success' %>
 </p>
 <% end %>
