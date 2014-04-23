@@ -10,5 +10,14 @@ A small ruby on rails applications that lists relevant research conferences wher
 * iCalendar support for all conferences or just single events
 * Tag support (search by tags, tag cloud)
 * Show the conference on Google Maps
-* Listing other conferences nearby
 * Add collegues who also plan to submit, were accepted, attend the conference
+* "I feel lucky to publish" looking for the next conference which is takes submissions. 
+
+## Requirements
+
+* Rails 4
+* bundler gem
+
+## Installation
+
+On *Unix* Systems (assuming you have rvm installed). A simple **bundle install** should install all the ruby requirements. 

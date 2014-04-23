@@ -13,26 +13,26 @@
   <% end %>
   <div class="form-group">
     <%= f.label "Conference Short Name" %>
-    <%= f.text_field :name, :class => 'form-control' %>
+    <%= f.text_field :name, :class => 'form-control', :type => 'text', :placeholder => "ICCDB" %>
   </div>
   <div class="form-group">
     <%= f.label "Conference Full Name" %><br />
-    <%= f.text_field :nameLong, :class => 'form-control'  %>
+    <%= f.text_field :nameLong, :class => 'form-control',  :type => 'text', :placeholder => "Internation Conference on Conference Databases"   %>
   </div>
   <div class="form-group">
     <%= f.label "Conference Website (URL)" %><br />
-    <%= f.text_field :conferenceurl, :class => 'form-control'  %>
+    <%= f.text_field :conferenceurl, :class => 'form-control', :type => 'url' %>
   </div>
   <div class="form-group">
     <%= f.label "Call for Papers (URL)" %><br />
-    <%= f.text_field :callforpapersurl, :class => 'form-control'  %>
+    <%= f.text_field :callforpapersurl, :class => 'form-control', :type => 'url'  %>
   </div>
   <div class="form-group">
   	<%= f.check_box :peerreviewed, :id => 'peerreviewed' %> <%= f.label "is peer reviewed" %>
   </div>   
   <div class="form-group">
     <%= f.label "H-Index" %>
-  	<%= f.text_field :hindex, :class => 'form-control'  %> 
+  	<%= f.text_field :hindex, :class => 'form-control', :type => 'number'   %> 
   </div>
   <div class="form-group">
     <%= f.label "Conference starts" %><br />
