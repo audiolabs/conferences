@@ -11,22 +11,23 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="input-group">
+  <fieldset>
+    <legend>General Information</legend>
+  <div class="field">
     <%= f.label "Conference Short Name" %><br />
     <%= f.text_field :name, :class => 'form-control' %>
   </div>
   <div class="field">
     <%= f.label "Conference Full Name" %><br />
-    <%= f.text_field :nameLong, %>
+    <%= f.text_field :nameLong, :class => 'form-control'  %>
   </div>
   <div class="field">
     <%= f.label "Conference Website (URL)" %><br />
-    <%= f.text_field :conferenceurl %>
+    <%= f.text_field :conferenceurl, :class => 'form-control'  %>
   </div>
   <div class="field">
     <%= f.label "Call for Papers (URL)" %><br />
-    <%= f.text_field :callforpapersurl %>
+    <%= f.text_field :callforpapersurl, :class => 'form-control'  %>
   </div>
   <div class="field">
     <%= f.label "is peer reviewed" %><br />
@@ -34,8 +35,9 @@
   </div>   
   <div class="field">
     <%= f.label "H-Index" %><br />
-  	<%= f.text_field :hindex %> 
+  	<%= f.text_field :hindex, :class => 'form-control'  %> 
   </div>
+  </fieldset>
   <div class="field">
     <%= f.label "Conference starts" %><br />
     <%= f.date_select :eventstart %>
@@ -55,9 +57,9 @@
     <span id="fullpaper_date" <% if @event.fullpaperdeadline_tba == true %> style="display:none" <% end %> ><%= f.date_select :fullpaperdeadline %></span>
   </div>
   <div>
-    <%= f.label :country, "Land" %><br />
-    <%= f.country_select :country %>
-  </div>
+    <%= f.label :country, "Country" %><br />
+	<%= f.country_select :country_code, ["Great Britain", "United States", "Germany", "France"] %>  
+  </div>	
   <div class="field">
     <%= f.label :city %><br />
     <%= f.text_field :city %>

@@ -5,7 +5,7 @@ Conferences::Application.routes.draw do
     resources :attendances
   end
 
-  match '/' => "events#index", :as => :home
+  get '/', to: 'events#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

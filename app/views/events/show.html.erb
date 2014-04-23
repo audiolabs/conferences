@@ -55,13 +55,6 @@
 <%= image_tag "http://maps.google.com/maps/api/staticmap?size=920x500&sensor=false&zoom=4&markers=#{@event.latitude}%2C#{@event.longitude}" %>
 </p>
 
-<h3>Nearby Conferences</h3>
-<ul>
-<% for event in @nearbylocations %>
-  <li><%= link_to event.address, event %> (<%= event.distance.round(2) %> km)</li>
-<% end %>
-</ul>
-
 <h2>Attendees</h2>
 
 <table>

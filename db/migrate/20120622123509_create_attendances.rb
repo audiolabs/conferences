@@ -8,9 +8,8 @@ class CreateAttendances < ActiveRecord::Migration
       t.boolean :attending
       t.references :event
       t.text :comments
-
       t.timestamps
     end
-    add_index :attendances, :event_id  
+    add_index :attendances, :event_id  
   end
 end

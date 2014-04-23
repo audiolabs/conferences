@@ -2,6 +2,7 @@ class Event < ActiveRecord::Base
   attr_accessible :city, :longitude ,:latitude, :comments, :eventend, :country, 
   :eventstart, :fullpaperdeadline, :name, :nameLong, :precisdeadline, :callforpapersurl, 
   :conferenceurl, :tags_attributes, :precisdeadline_tba, :fullpaperdeadline_tba, :peerreviewed, :tag_list, :hindex
+
   
   has_many :attendances, :dependent => :destroy
   has_many :taggings
@@ -9,13 +10,19 @@ class Event < ActiveRecord::Base
 
   validates :name, :conferenceurl, :city, :presence => true
 
-  #accepts_nested_attributes_for :tags, :allow_destroy => :true, :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
-  
   after_validation :geocode, :scope => [:city_changed?, :country_changed?]
   geocoded_by :address
   
+  attr_accessor :country_code
+  
   # TODO 
   # validate for end date after start date
+  
+  def country_name
+    country = ISO3166::Country[country_code]
+    country.translations[I18n.locale.to_s] || country.name
+  end
+  
   
   def self.tagged_with(name)
       Tag.find_by_name!(name).events

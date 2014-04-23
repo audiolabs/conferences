@@ -90,8 +90,6 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     @event = Event.find(params[:id])
-    @nearbylocations = @event.nearbys(50, {:order => :distance, :units => :km})
-    
     respond_to do |format|
       format.html # show.html.erb
       format.ics { render :text => self.generate_ical_event }
