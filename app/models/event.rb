@@ -9,7 +9,9 @@ class Event < ActiveRecord::Base
   has_many :tags, through: :taggings
 
   validates :name, :conferenceurl, :city, :presence => true
-
+  validates :conferenceurl, :format => URI::regexp(%w(http https))
+  validates :callforpapersurl, :format => URI::regexp(%w(http https))
+  
   after_validation :geocode, :scope => [:city_changed?, :country_changed?]
   geocoded_by :address
   

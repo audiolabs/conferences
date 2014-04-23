@@ -28,11 +28,10 @@
     <%= f.text_field :callforpapersurl, :class => 'form-control'  %>
   </div>
   <div class="form-group">
-    <%= f.label "is peer reviewed" %><br />
-  	<%= f.check_box :peerreviewed, :id => 'peerreviewed' %> 
+  	<%= f.check_box :peerreviewed, :id => 'peerreviewed' %> <%= f.label "is peer reviewed" %>
   </div>   
   <div class="form-group">
-    <%= f.label "H-Index" %><br />
+    <%= f.label "H-Index" %>
   	<%= f.text_field :hindex, :class => 'form-control'  %> 
   </div>
   <div class="form-group">
@@ -53,7 +52,7 @@
     <%= f.check_box :fullpaperdeadline_tba, :id => 'fullpaperdeadline_tba' %> no fullpaper/tba
     <span id="fullpaper_date" <% if @event.fullpaperdeadline_tba == true %> style="display:none" <% end %> ><%= f.date_select :fullpaperdeadline %></span>
   </div>
-  <div>
+  <div  class="form-group">
     <%= f.label :country, "Country" %><br />
 	<%= f.country_select :country_code, ["Great Britain", "United States", "Germany", "France"] %>  
   </div>	
