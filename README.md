@@ -15,9 +15,9 @@ A small ruby on rails applications that lists relevant research conferences wher
 
 ## Requirements
 
-* Rails 4
+* Rails 4.1
 * bundler gem
 
 ## Installation
 
-On *Unix* Systems (assuming you have rvm installed). A simple **bundle install** should install all the ruby requirements. 
+On *Unix* Systems (assuming you have rvm installed). A simple **bundle install** should install all the ruby requirements. Also Rails 4.1 requires a config/secrets.yml which contains a secret key. You can generate a new key by using **rake secret**
