@@ -60,7 +60,7 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Planningtosubmit</th>
+    <th>Planning to submit</th>
     <th>Submitted</th>
     <th>Accepted</th>
     <th>Attending</th>
@@ -70,10 +70,11 @@
 <% @event.attendances.each do |attendance| %>
   <tr>
     <td><%= attendance.name %></td>
-    <td><%= attendance.planningtosubmit %></td>
-    <td><%= attendance.submitted %></td>
-    <td><%= attendance.accepted %></td>
-    <td><%= attendance.attending %></td>
+	
+    <td><%= check_box_tag '', attendance.id, attendance.planningtosubmit , disabled: true %></td>
+    <td><%= check_box_tag '', attendance.id, attendance.submitted , disabled: true %></td>
+    <td><%= check_box_tag '', attendance.id, attendance.accepted , disabled: true %></td>
+    <td><%= check_box_tag '', attendance.id, attendance.attending , disabled: true %></td>
 	<td><%= link_to 'Delete', [attendance.event, attendance],
                :confirm => 'Are you sure?',
                :method => :delete %> 
@@ -83,10 +84,11 @@
 <% end %>
 </table>
 
+
 <h2>Add an Attendee:</h2>
 
-<table>
 <%= form_for([@event, @event.attendances.build]) do |f| %>
+<table>
 
 <tr>
     <td>Name <%= f.text_field :name %></td>
@@ -96,9 +98,9 @@
 	<td>Attending Conference <%= f.check_box :attending %></td>
  </tr>
 </table>
-<div class="actions">
-  <%= f.submit %>
-</div>
+<p>
+  <%= f.submit 'Add Attendee', :class => 'btn btn-success' %>
+</p>
 <% end %>
 
 <%= link_to 'Edit', edit_event_path(@event) %> |
