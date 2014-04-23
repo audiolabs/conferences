@@ -9,11 +9,11 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130730092019) do
+ActiveRecord::Schema.define(version: 20130730092019) do
 
-  create_table "attendances", :force => true do |t|
+  create_table "attendances", force: true do |t|
     t.string   "name"
     t.boolean  "accepted"
     t.boolean  "submitted"
@@ -21,16 +21,19 @@ ActiveRecord::Schema.define(:version => 20130730092019) do
     t.boolean  "attending"
     t.integer  "event_id"
     t.text     "comments"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "events", :force => true do |t|
+  add_index "attendances", ["event_id"], name: "index_attendances_on_event_id"
+
+  create_table "events", force: true do |t|
     t.string   "name"
     t.string   "conferenceurl"
     t.string   "callforpapersurl"
     t.boolean  "precisdeadline_tba"
     t.boolean  "fullpaperdeadline_tba"
+    t.boolean  "peerreviewed"
     t.date     "eventstart"
     t.date     "eventend"
     t.date     "precisdeadline"
@@ -40,30 +43,29 @@ ActiveRecord::Schema.define(:version => 20130730092019) do
     t.float    "latitude"
     t.float    "longitude"
     t.text     "comments"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
-    t.boolean  "peerreviewed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "nameLong"
     t.integer  "hindex"
   end
 
-  create_table "taggings", :force => true do |t|
+  create_table "taggings", force: true do |t|
     t.integer  "tag_id"
     t.integer  "event_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "taggings", ["event_id"], :name => "index_taggings_on_event_id"
-  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
+  add_index "taggings", ["event_id"], name: "index_taggings_on_event_id"
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id"
 
-  create_table "tags", :force => true do |t|
+  create_table "tags", force: true do |t|
     t.string   "name"
     t.integer  "event_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "tags", ["event_id"], :name => "index_tags_on_event_id"
+  add_index "tags", ["event_id"], name: "index_tags_on_event_id"
 
 end
