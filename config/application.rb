@@ -43,6 +43,13 @@ module Conferences
     config.active_support.escape_html_entities_in_json = true
 
     config.active_record.whitelist_attributes = false
+  
+    YAML.load_file("#{Rails.root}/config/config.yml").each { |k,v| config.send "#{k}=", v }
+  
 
+  end
+  
+  def self.config
+      Application.config
   end
 end
