@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= bootstrap.min
 //= require_tree . 
+//= require bootstrap-tagsinput
 
 jQuery(document).ready(function($) {
     $('#precisdeadline_tba').live('change', function() {
