@@ -1,74 +1,104 @@
 <% @event.tags.build %>
-<%= form_for(@event) do |f| %>
-  <% if @event.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+<%= form_for(@event, html: { class: 'form-horizontal' }) do |f| %>
+    <% if @event.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
 
-      <ul>
-      <% @event.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+            <ul>
+                <% @event.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+    <div class="form-group">
+        <%= f.label "Conference Short Name", class: "col-sm-4 control-label" %>
+        <div class="col-sm-6">
+            <%= f.text_field :name, :class => 'form-control', :type => 'text', :placeholder => "ICCDB" %>
+        </div>
     </div>
-  <% end %>
-  <div class="form-group">
-    <%= f.label "Conference Short Name" %>
-    <%= f.text_field :name, :class => 'form-control', :type => 'text', :placeholder => "ICCDB" %>
-  </div>
-  <div class="form-group">
-    <%= f.label "Conference Full Name" %><br />
-    <%= f.text_field :nameLong, :class => 'form-control',  :type => 'text', :placeholder => "Internation Conference on Conference Databases"   %>
-  </div>
-  <div class="form-group">
-    <%= f.label "Conference Website (URL)" %><br />
-    <%= f.text_field :conferenceurl, :class => 'form-control', :type => 'url' %>
-  </div>
-  <div class="form-group">
-    <%= f.label "Call for Papers (URL)" %><br />
-    <%= f.text_field :callforpapersurl, :class => 'form-control', :type => 'url'  %>
-  </div>
-  <div class="form-group">
-  	<%= f.check_box :peerreviewed, :id => 'peerreviewed' %> <%= f.label "is peer reviewed" %>
-  </div>   
-  <div class="form-group">
-    <%= f.label "H-Index" %>
-  	<%= f.text_field :hindex, :class => 'form-control', :type => 'number'   %> 
-  </div>
-  <div class="form-group">
-    <%= f.label "Conference starts" %><br />
-    <%= f.date_select :eventstart %>
-  </div>
-  <div class="form-group">
-    <%= f.label "Conference ends" %><br />
-    <%= f.date_select :eventend %>
-  </div>
-  <div class="form-group">
-    <%= f.label "Precis Deadline" %><br />
-    <%= f.check_box :precisdeadline_tba, :id => 'precisdeadline_tba' %> no precis/tba 
-	    <span id="precis_date" <% if @event.precisdeadline_tba == true %> style="display:none" <% end %> ><%= f.date_select :precisdeadline %></span>
-  </div>
-  <div class="form-group">
-    <%= f.label "Full Paper Deadline" %><br />
-    <%= f.check_box :fullpaperdeadline_tba, :id => 'fullpaperdeadline_tba' %> no fullpaper/tba
-    <span id="fullpaper_date" <% if @event.fullpaperdeadline_tba == true %> style="display:none" <% end %> ><%= f.date_select :fullpaperdeadline %></span>
-  </div>
-  <div  class="form-group">
-    <%= f.label :country, "Country" %><br />
-	<%= f.country_select :country, ["Great Britain", "United States", "Germany", "France"] %>  
-  </div>	
-  <div class="form-group">
-    <%= f.label :city %><br />
-    <%= f.text_field :city, :class => 'form-control' %>
-  </div>
-  <div class="form-group">
-    <%= f.label :comments %><br />
-    <%= f.text_area :comments, :class => 'form-control' %>
-  </div>
-  <div class="form-group">
-  	<%= f.label :tag_list, "Tags (separated by commas)" %><br />
-  	<%= f.text_field :tag_list, :class => 'form-control' %>
-  </div>
-  <div>
-    <%= f.submit "Save", :class => 'btn btn-success' %>
-  </div>
+    <div class="form-group">
+        <%= f.label "Conference Full Name", class: "col-sm-4 control-label"%>
+        <div class="col-sm-6">
+            <%= f.text_field :nameLong, :class => 'form-control',  :type => 'text', :placeholder => "Internation Conference on Conference Databases"   %>
+        </div>
+    </div>
+    <div class="form-group">
+        <%= f.label "Conference Website (URL)", class: "col-sm-4 control-label" %>
+        <div class="col-sm-6">
+            <%= f.text_field :conferenceurl, :class => 'form-control', :type => 'url' %>
+        </div>
+    </div>
+    <div class="form-group">
+        <%= f.label "Call for Papers (URL)", class: "col-sm-4 control-label" %>
+        <div class="col-sm-6">
+            <%= f.text_field :callforpapersurl, :class => 'form-control', :type => 'url'  %>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-6">
+            <div class="checkbox">
+                <%= f.check_box :peerreviewed, :id => 'peerreviewed' %> <%= f.label "is peer reviewed" %>
+            </div>
+        </div>
+    </div>   
+    <div class="form-group">
+        <%= f.label "H-Index", class: "col-sm-4 control-label" %>
+        <div class="col-sm-6">
+            <%= f.text_field :hindex, :class => 'form-control', :type => 'number'   %> 
+        </div>
+    </div>
+    <div class="form-group">
+        <%= f.label "Conference starts", class: "col-sm-4 control-label" %>
+        <div class="col-sm-6">
+            <%= f.date_select :eventstart %>
+        </div>
+    </div>
+    <div class="form-group">
+        <%= f.label "Conference ends", class: "col-sm-4 control-label" %>
+        <div class="col-sm-6">
+            <%= f.date_select :eventend %>
+        </div>
+    </div>
+    <div class="form-group">
+        <%= f.label "Precis Deadline", class: "col-sm-4 control-label" %>
+        <div class="col-sm-6">
+            <%= f.check_box :precisdeadline_tba, :id => 'precisdeadline_tba' %> no precis/tba 
+            <span id="precis_date" <% if @event.precisdeadline_tba == true %> style="display:none" <% end %> ><%= f.date_select :precisdeadline %></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <%= f.label "Full Paper Deadline", class: "col-sm-4 control-label"  %>
+        <div class="col-sm-6">
+            <%= f.check_box :fullpaperdeadline_tba, :id => 'fullpaperdeadline_tba' %> no fullpaper/tba
+            <span id="fullpaper_date" <% if @event.fullpaperdeadline_tba == true %> style="display:none" <% end %> ><%= f.date_select :fullpaperdeadline %></span>
+        </div>
+    </div>
+    <div  class="form-group">
+        <%= f.label :country, "Country", class: "col-sm-4 control-label"  %>
+        <div class="col-sm-6">
+            <%= f.country_select :country, ["Great Britain", "United States", "Germany", "France"], html: {:class=>'some-class'} %>  
+        </div>
+    </div>	
+    <div class="form-group">
+        <%= f.label :city, class: "col-sm-4 control-label"  %>
+        <div class="col-sm-6">
+            <%= f.text_field :city, :class => 'form-control' %>
+        </div>
+    </div>
+    <div class="form-group">
+        <%= f.label :comments, class: "col-sm-4 control-label"  %>
+        <div class="col-sm-6">
+            <%= f.text_area :comments, :class => 'form-control' %>
+        </div>
+    </div>
+    <div class="form-group">
+     <%= f.label :tag_list, "Tags (separated by commas)", class: "col-sm-4 control-label"  %>
+        <div class="col-sm-6">
+            <%= f.text_field :tag_list, :class => 'form-control' %>
+        </div>
+    </div>
+    <div>
+        <%= f.submit "Save", :class => 'btn btn-success' %>
+    </div>
 <% end %>
