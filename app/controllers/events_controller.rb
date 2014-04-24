@@ -34,21 +34,18 @@ class EventsController < ApplicationController
 
   def generate_ical_overview
     cal = Icalendar::Calendar.new 
-    cal.custom_property("METHOD","PUBLISH")
     @events.each do |e|
       # conference event
       event = Icalendar::Event.new
-      event.dtstart = e.eventstart.strftime("%Y%m%d")
+      event.dtstart = e.eventstart
       event.dtstart.ical_params = { "VALUE" => "DATE" }      
-      event.dtend   = (e.eventend+1).strftime("%Y%m%d")
+      event.dtend   = (e.eventend+1)
       event.dtend.ical_params = { "VALUE" => "DATE" , "TZID" => "Europe/London" }
       
       event.summary = e.name
-      event.description = ""
       event.location = "#{e.city}, #{e.country}"
       event.url = e.conferenceurl
-      event.add_comment(e.comments)
-      cal.add event
+      cal.add_event(event)
     end
     headers['Content-Type'] = "text/calendar; charset=UTF-8"
     cal.publish
@@ -57,39 +54,34 @@ class EventsController < ApplicationController
 
   def generate_ical_overview_including_deadlines
     cal = Icalendar::Calendar.new 
-    cal.custom_property("METHOD","PUBLISH")
     @events.each do |e|
       # conference event
       event = Icalendar::Event.new
-      event.dtstart = e.eventstart.strftime("%Y%m%d")
+      event.dtstart = e.eventstart
       event.dtstart.ical_params = { "VALUE" => "DATE" }      
-      event.dtend   = (e.eventend+1).strftime("%Y%m%d")
+      event.dtend   = (e.eventend+1)
       event.dtend.ical_params = { "VALUE" => "DATE" , "TZID" => "Europe/London" }
       event.summary = e.name
-      event.description = ""
       event.location = "#{e.city}, #{e.country}"
       event.url = e.conferenceurl
-      event.add_comment(e.comments)
-      cal.add event
+      cal.add_event(event)
       # precis deadline
       unless e.noprecis?
         precis = Icalendar::Event.new
-        precis.start = e.precisdeadline.strftime("%Y%m%d")
+        precis.dtstart = e.precisdeadline
         precis.summary = "[Deadline] #{e.name} (Abstract/Precis)"
-        precis.description = ""
         precis.location = "#{e.city}, #{e.country}"
         precis.url = e.callforpapersurl
-        cal.add precis
+        cal.add_event(precis)
       end
       # fullpaper deadline
       unless e.nofullpaper?
         paper = Icalendar::Event.new
-        paper.start = e.fullpaperdeadline.strftime("%Y%m%d")
+        paper.dtstart = e.fullpaperdeadline
         paper.summary = "[Deadline] #{e.name} (Paper)"
-        paper.description = ""
         paper.location = "#{e.city}, #{e.country}"
         paper.url = e.callforpapersurl
-        cal.add paper
+        cal.add_event(paper)
       end
     end
     headers['Content-Type'] = "text/calendar; charset=UTF-8"
@@ -116,22 +108,19 @@ class EventsController < ApplicationController
   
   def generate_ical_event
     cal = Icalendar::Calendar.new 
-    cal.custom_property("METHOD","PUBLISH")
     event = Icalendar::Event.new
-    event.dtstart = @event.eventstart.strftime("%Y%m%d")
+    event.dtstart = @event.eventstart
     event.dtstart.ical_params = { "VALUE" => "DATE" }      
-    event.dtend   = (@event.eventend+1).strftime("%Y%m%d")
+    event.dtend   = (@event.eventend+1)
     event.dtend.ical_params = { "VALUE" => "DATE" , "TZID" => "Europe/London" }
     event.summary = @event.name
-    event.description = ""
     event.location = "#{@event.city}, #{@event.country}"
     event.url = @event.conferenceurl
-    event.add_comment(@event.comments)
 
-    event.alarm.description =  "Alarm notification"
+    event.alarm.summary =  "#{@event.name} is approaching"
     event.alarm.trigger =  "-P1" # 1 day before
 
-    cal.add event
+    cal.add_event(event)
     headers['Content-Type'] = "text/calendar; charset=UTF-8"
     cal.publish
     cal.to_ical
