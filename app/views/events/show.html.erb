@@ -1,105 +1,116 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <h1><%= @event.name %> 	<%= link_to "Add to iCal", { :controller => 'events', :action => 'show', :format => :ics, :only_path => false}, :class => "btn btn-default" %>
-</h1>
-  <h2><%= @event.nameLong %> </h2>
-  <h3><%= duration(@event) %></h3>
+    <h1>
+        <%= @event.name %>
+        <%= link_to "Add to iCal", { :controller => 'events', :action => 'show', :format => :ics, :only_path => false}, :class => "btn btn-default btn-sm" %>
+        <%= link_to 'Edit', edit_event_path(@event), :class => "btn btn-default btn-sm" %>
+    </h1>
+    <h2><%= @event.nameLong %> </h2>
+    <h3><%= duration(@event) %></h3>
 </p>
 
 <dl class="dl-horizontal">
-  <dt><b>Precis deadline:</b></dt>
-  <dd><%= precisdeadline(@event) %></dd>
-  
-  <dt><b>Full-paper deadline:</b></dt>
-  <dd><%= fullpaperdeadline(@event) %></dd>
-  
-  <dt><b>H-Index:</b></dt>
-  <dd><%= @event.hindex %></dd>
-  
-  <dt><b>Is peer reviewed:</b></dt>
-  <dd><%= @event.peerreviewed %></dd>
-  
-  <dt><b>City:</b></dt>
-  <dd><%= @event.city %></dd>
-   
-  <dt><b>Country:</b></dt>
-  <dd><%= @event.country %></dd>
-  
-  <dt><b>Comments:</b></dt>
-  <dd><%= @event.comments %></dd>
-  
-  <dt><b>Tags:</b></dt>
-  <dd><%= join_tags(@event) %></dd>
+    <dt>Precis deadline</dt>
+    <dd><%= precisdeadline(@event) %></dd>
+
+    <dt>Full-paper deadline</dt>
+    <dd><%= fullpaperdeadline(@event) %></dd>
+
+    <dt>H-Index</dt>
+    <dd><%= @event.hindex %></dd>
+
+    <dt>Is peer reviewed</dt>
+    <dd><%= @event.peerreviewed %></dd>
+
+    <dt>City</dt>
+    <dd><%= @event.city %></dd>
+
+    <dt>Country</dt>
+    <dd><%= @event.country or "undefined" %></dd>
+
+    <dt>Comments</dt>
+    <dd><%= @event.comments %></dd>
+
+    <dt>Tags</dt>
+    <dd><%= join_tags(@event) %></dd>
 </dl>
 <p>
 
-<p>
-<%= image_tag "http://maps.google.com/maps/api/staticmap?size=900x500&sensor=false&zoom=4&markers=#{@event.latitude}%2C#{@event.longitude}" %>
-</p>
+    <p>
+        <%= image_tag "http://maps.google.com/maps/api/staticmap?size=900x500&sensor=false&zoom=4&markers=#{@event.latitude}%2C#{@event.longitude}" %>
+    </p>
 
-<h2>Attendees</h2>
+    <h2>Attendees</h2>
 
- <table class="table table-hover">
-  <tr>
-    <th>Name</th>
-    <th>Planning to submit</th>
-    <th>Submitted</th>
-    <th>Accepted</th>
-    <th>Attending</th>
-	<th></th>
-  </tr>
+    <table class="table table-hover">
+      <tr>
+        <th>Name</th>
+        <th>Planning to submit</th>
+        <th>Submitted</th>
+        <th>Accepted</th>
+        <th>Attending</th>
+        <th></th>
+    </tr>
 
-<% @event.attendances.each do |attendance| %>
-  <tr>
-    <td><%= attendance.name %></td>
-	
-    <td><%= check_box_tag '', attendance.id, attendance.planningtosubmit , disabled: true %></td>
-    <td><%= check_box_tag '', attendance.id, attendance.submitted , disabled: true %></td>
-    <td><%= check_box_tag '', attendance.id, attendance.accepted , disabled: true %></td>
-    <td><%= check_box_tag '', attendance.id, attendance.attending , disabled: true %></td>
-	<td>
-	
-			<div class="btn-toolbar" role="toolbar">
-		      <div class="btn-group-xs">
-				<%= link_to edit_event_attendance_path(@event,attendance), class: "btn btn-default" do %>
-				    <i class="glyphicon glyphicon-pencil"></i>
-				<% end %>  
-				<%= link_to 'Delete', [attendance.event, attendance],
-		               :confirm => 'Are you sure?',
-		               :method => :delete,  class: "btn btn-danger" %>
-				
-		      </div>
-		    </div>
-</td>
-  </tr>
+    <% @event.attendances.each do |attendance| %>
+    <tr>
+        <td><%= attendance.name %></td>
+
+        <td><%= check_box_tag '', attendance.id, attendance.planningtosubmit , disabled: true %></td>
+        <td><%= check_box_tag '', attendance.id, attendance.submitted , disabled: true %></td>
+        <td><%= check_box_tag '', attendance.id, attendance.accepted , disabled: true %></td>
+        <td><%= check_box_tag '', attendance.id, attendance.attending , disabled: true %></td>
+        <td>
+
+         <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group-xs">
+                <%= link_to edit_event_attendance_path(@event,attendance), class: "btn btn-default" do %>
+                <i class="glyphicon glyphicon-pencil"></i>
+                <% end %>  
+                <%= link_to 'Delete', [attendance.event, attendance],
+                :confirm => 'Are you sure?',
+                :method => :delete,  class: "btn btn-danger" %>
+            </div>
+        </div>
+    </td>
+</tr>
 <% end %>
 </table>
 
 
 <h2>Add an Attendee:</h2>
 
-<%= form_for([@event, @event.attendances.build], html: { class: 'form-horizontal' }) do |f| %>
-  <div class="form-group">
-   Name <%= f.text_field :name,:class => 'form-control' %>
-  </div>
-  <div class="form-group">
-  	<%= f.check_box :planningtosubmit %> Planning to submit a paper 
-  </div>
-  <div class="form-group">
-   <%= f.check_box :submitted %> Paper submitted 
-  </div>
-  <div class="form-group">
-    <%= f.check_box :accepted %> Paper accepted 
-  </div>
-   <div class="form-group">
-   <%= f.check_box :attending %> Attending Conference 
-   </div>
+<%= form_for([@event, @event.attendances.build], html: { class: 'form-inline' }) do |f| %>
+    <div class="form-group">
+        <label class="sr-only">Name</label>
+        <%= f.text_field :name,:class => 'form-control', :placeholder => 'Name' %>
+    </div>
+    <div class="checkbox">
+      <label>
+          <%= f.check_box :planningtosubmit %> Planning to submit a paper 
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+          <%= f.check_box :submitted %> Paper submitted 
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+          <%= f.check_box :accepted %> Paper accepted 
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+          <%= f.check_box :attending %> Attending Conference 
+      </label>
+    </div>
 
- <p>
-  <%= f.submit 'Add Attendee', :class => 'btn btn-success' %>
-</p>
+    <%= f.submit 'Add Attendee', :class => 'btn btn-success' %>
 <% end %>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+<p>
+     |
+    <%= link_to 'Back', events_path %>
+</p>
