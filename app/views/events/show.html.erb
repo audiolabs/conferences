@@ -1,10 +1,18 @@
 <p id="notice"><%= notice %></p>
 
+<%= link_to '« Back', events_path, :class => "btn btn-default btn-sm" %>
+<div class="btn-group">
+    <%= link_to({:controller => 'events', :action => 'show', :format => :ics}, {:class => "btn btn-default btn-sm"}) do %>
+        <span class="glyphicon glyphicon-calendar"></span> Add to iCal
+    <% end %>
+    <%= link_to edit_event_path(@event), :class => "btn btn-default btn-sm" do %>
+        <span class="glyphicon glyphicon-pencil"></span> Edit
+    <% end %>
+</div>
+
 <p>
     <h1>
         <%= @event.name %>
-        <%= link_to "Add to iCal", { :controller => 'events', :action => 'show', :format => :ics, :only_path => false}, :class => "btn btn-default btn-sm" %>
-        <%= link_to 'Edit', edit_event_path(@event), :class => "btn btn-default btn-sm" %>
     </h1>
     <h2><%= @event.nameLong %> </h2>
     <h3><%= duration(@event) %></h3>
@@ -109,8 +117,3 @@
 
     <%= f.submit 'Add Attendee', :class => 'btn btn-success' %>
 <% end %>
-
-<p>
-     |
-    <%= link_to 'Back', events_path %>
-</p>
