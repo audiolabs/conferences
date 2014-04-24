@@ -73,36 +73,6 @@
 
 </table>
 
-<h2>Past Conferences</h2>
-
-<table class="conferencetable">
-  <tr>
-    <th>Name</th>
-    <th>Date</th>
-    <th></th>
-    <th></th>
-    <th>Location</th>
-    <th></th>
-  </tr>
-
-<% @past.each do |event| %>
-  <tr>
-    <td><%= link_to event.name, event.conferenceurl %></td>
-    <td><%= duration(event) %></td>
-	<td></td>
-	<td></td>
-    <td><%= event.address %></td>
-    <td style="float:right"><%= link_to 'Details', event, :class => "tiny_button" %>
-    <%= link_to 'Edit', edit_event_path(event), :class => "tiny_button" %>
-    <%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' }, :class => "tiny_button_red"%></td>
-  </tr>
-<% end %>
-
-</table>
-<div class="pagination">
-	<%= will_paginate @past, :param_name => 'past_page' %>
-</div>
-
 <br />
 
 <h2>Tags</h2>

@@ -5,13 +5,9 @@ class EventsController < ApplicationController
     @nextByDeadline = Event.nextByDeadline
     
     if params[:tag]
-      
-       @events = Event.tagged_with(params[:tag]).where("eventend > ?", Time.now).sort_by(&:closestDeadline)
-       @past = Event.tagged_with(params[:tag]).where("eventend <= ?", Time.now).paginate(:page => params[:past_page], :per_page => 20).order(:eventend).reverse_order
+      @events = Event.tagged_with(params[:tag]).where("eventend > ?", Time.now).sort_by(&:closestDeadline)
     else
-        @events = Event.where("eventend > ?", Time.now).sort_by(&:closestDeadline)
-        @past = Event.where("eventend <= ?", Time.now).paginate(:page => params[:past_page], :per_page => 20).order(:eventend).reverse_order
-        
+      @events = Event.where("eventend > ?", Time.now).sort_by(&:closestDeadline)      
     end
     @currentlocation = Geocoder.search(request.ip)
     respond_to do |format|
@@ -20,6 +16,21 @@ class EventsController < ApplicationController
       format.json { render json: @allevents.to_json(:only => [:id, :name, :startdate, :latitude, :longitude])  }
     end
   end
+  
+  # GET /events
+  # GET /events.json
+  def archive
+    if params[:tag]
+      @past = Event.tagged_with(params[:tag]).where("eventend <= ?", Time.now).paginate(:page => params[:past_page], :per_page => 20).order(:eventend).reverse_order
+    else
+      @past = Event.where("eventend <= ?", Time.now).paginate(:page => params[:past_page], :per_page => 20).order(:eventend).reverse_order  
+    end
+    respond_to do |format|
+      format.html # archive.html.erb
+      format.json { render json: @allevents.to_json(:only => [:id, :name, :startdate, :latitude, :longitude])  }
+    end
+  end
+  
 
   def generate_ical_overview
     cal = Icalendar::Calendar.new 
