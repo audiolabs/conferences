@@ -1,41 +1,61 @@
-<%= form_for [@event,@attendance] do |f| %>
-  <% if @attendance.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@attendance.errors.count, "error") %> prohibited this attendance from being saved:</h2>
+<%= form_for([@event,@attendance],html: { class: 'form-horizontal' }) do |f| %>
+    <% if @attendance.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(@attendance.errors.count, "error") %> prohibited this attendance from being saved:</h2>
 
-      <ul>
-      <% @attendance.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+            <ul>
+                <% @attendance.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :accepted %><br />
-    <%= f.check_box :accepted %>
-  </div>
-  <div class="field">
-    <%= f.label :submitted %><br />
-    <%= f.check_box :submitted %>
-  </div>
-  <div class="field">
-    <%= f.label :planningtosubmit %><br />
-    <%= f.check_box :planningtosubmit %>
-  </div>
-  <div class="field">
-    <%= f.label :attending %><br />
-    <%= f.check_box :attending %>
-  </div>
-  <div class="field">
-    <%= f.label :comments %><br />
-    <%= f.text_area :comments %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Name</label>
+            <div class="col-sm-4">
+                <%= f.text_field :name,:class => 'form-control' %>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-4">
+                <div class="checkbox">
+                    <label>
+                        <%= f.check_box :planningtosubmit %> Planning to submit a paper 
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-4">
+                <div class="checkbox">
+                    <label>
+              <%= f.check_box :submitted %> Paper submitted 
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-4">
+                <div class="checkbox">
+                    <label>
+              <%= f.check_box :accepted %> Paper accepted 
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-4">
+                <div class="checkbox">
+                    <label>
+              <%= f.check_box :attending %> Attending Conference 
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-4">
+                <%= f.submit 'Add Attendee', :class => 'btn btn-success' %>
+            </div>
+        </div>
 <% end %>
