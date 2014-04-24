@@ -93,10 +93,15 @@
     </table>
 </div>
 
-
 <div class="row">
-    <h3>Add an Attendee:</h3>
+    <div class="col-md-offset-5 col-md-1">
+        <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#addattendee">
+            <span class="glyphicon glyphicon-chevron-down"></span> Add Attendee
+        </button>
+    </div>
+</div>
 
+<div class="row collapse" id="addattendee">
     <%= form_for([@event, @event.attendances.build], html: { class: 'form-horizontal' }) do |f| %>
         <div class="form-group">
             <label class="col-sm-4 control-label">Name</label>
