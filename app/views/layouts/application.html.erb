@@ -43,7 +43,7 @@
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
               <li><%= link_to 'Archive', { :controller => 'events', :action => 'archive'} %></li>              
-              <li><%= link_to 'I feel lucky to publish', @nextByDeadline %></li>              
+              <li><%= link_to 'I feel lucky to publish', { :controller => 'events', :action => 'show', :id => 'lucky' } %></li>              
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">iCal <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -56,9 +56,15 @@
           </div><!--/.nav-collapse -->
         </div>
       </div>
-	  <div class="container">
-        <p id="notice"><%= notice %></p>
-		  	<%= yield %>
+    <div class="container">
+      <% flash.each do |key, value| %>
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6 <%= flash_class(key) %>">
+              <%= value %>
+          </div>
+        </div>
+      <% end %>
+      <%= yield %>
  	  </div>
 	  
 <%= yield :javascript %>

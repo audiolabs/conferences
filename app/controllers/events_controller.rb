@@ -100,7 +100,13 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    @event = Event.find(params[:id])
+    if params[:id] == 'lucky'
+      flash[:notice] = "Showing conference with closest paper submission deadline."
+      @event = Event.nextByDeadline
+    else
+      @event = Event.find(params[:id])
+    end
+
     respond_to do |format|
       format.html # show.html.erb
       format.ics { render :text => self.generate_ical_event }
