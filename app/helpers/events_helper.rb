@@ -42,4 +42,9 @@ module EventsHelper
        html << ""
      end
    end
+   
+   def daysleft_to_color(deadline)
+        html = ""
+        html << 'style=color:rgb(' + ((deadline - Date.today).to_i*-(255/90)+255).to_s + ',0,0)'
+   end
 end

@@ -38,7 +38,7 @@
 <% if event.precisdeadline < Date.today %>
 	<td style="text-decoration: line-through;"><%= precisdeadline(event) %></td>
 <% else %>
-	<td style="color:rgb(<%= (event.precisdeadline - Date.today).to_i*-(255/90)+255 %>,0,0)">
+	<td <%= daysleft_to_color(event.precisdeadline) %>>
 		<%= precisdeadline(event) %>		
 	</td>
 <% end %>
@@ -46,7 +46,7 @@
 <% if event.fullpaperdeadline < Date.today %>
 	<td style="text-decoration: line-through;"><%= fullpaperdeadline(event) %></td>
 <% else %>
-	<td style="color:rgb(<%= (event.fullpaperdeadline - Date.today).to_i*-(255/90)+255 %>,0,0)">
+	<td <%= daysleft_to_color(event.fullpaperdeadline) %>>
 		<%= fullpaperdeadline(event) %>
 	</td>
 <% end %>
