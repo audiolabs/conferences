@@ -3,7 +3,7 @@
 <h2>Upcoming Conferences</h2>
 
 
-<table class="conferencetable">
+<table class="table table-hover">
   <tr>
     <th>Name</th>
     <th></th>
@@ -52,8 +52,7 @@
 <% end %>
     <td><%= truncate(event.address, :length => 20) %></td>
 	<td><span class="badge"><%= event.attendances.count  %></span></td>
-	
-    <td style="float:right">
+    <td>
 		<div class="btn-toolbar" role="toolbar">
 	      <div class="btn-group-xs">
 			<%= link_to edit_event_path(event), class: "btn btn-default" do %>
@@ -64,16 +63,10 @@
 			<% end %>
 	      </div>
 	    </div>
-	
-   
-	
 	</td>
   </tr>
 <% end %>
-
 </table>
-
-<br />
 
 <h2>Tags</h2>
 <div id="tag_cloud">

@@ -43,23 +43,22 @@
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
               <li><%= link_to 'Archive', { :controller => 'events', :action => 'archive'} %></li>              
-				
+              <li><%= link_to 'Next by deadline', @nextByDeadline %></li>              
               <li><%= link_to 'I feel lucky to publish', @nextByDeadline %></li>              
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">iCal <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><%= link_to "Add all upcoming conferences", { :controller => 'events', :action => 'index', :format => :ics, :only_path => false, :protocol => "webcal"} %></li>
-                  <li><%= link_to "Add all upcoming conferences + deadlines", { :controller => 'events', :action => 'index', :format => :ics, :only_path => false, :protocol => "webcal", :deadlines => true} %><a href="#"></a></li>
+                  <li><%= link_to "Conference Dates", { :controller => 'events', :action => 'index', :format => :ics, :only_path => false, :protocol => "webcal"} %></li>
+                  <li><%= link_to "Dates + Deadlines", { :controller => 'events', :action => 'index', :format => :ics, :only_path => false, :protocol => "webcal", :deadlines => true} %><a href="#"></a></li>
               </li>
             </ul>
-            <li><%= link_to 'Add new conference', new_event_path %></li>
+            <li><%= link_to 'Add New', new_event_path %></li>
             
           </div><!--/.nav-collapse -->
         </div>
       </div>
 	  <div class="container">	  
 		  	<%= yield %>
-
  	  </div>
 	  
 <%= yield :javascript %>
