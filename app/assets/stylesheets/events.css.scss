@@ -3,15 +3,23 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #tag_cloud {
-  width: 1280px;
   line-height: 1.6em;
-  .s { font-size: 0.8em; }
-  .m { font-size: 1.2em; }
-  .l { font-size: 1.8em; }
+  .s {
+      font-size: 0.96em;
+      opacity: 0.6;
+  }
+  .m {
+      font-size: 1.15em;
+      opacity: 0.9;
+  }
+  .l {
+      font-size: 1.35em;
+  }
 }
 
 .imminent {
-    background-color: rgba(225, 0, 0, 0.1);
+    color: #FF0000;
+    font-weight: bold;
 }
 
 .closed {

@@ -17,36 +17,17 @@ module EventsHelper
     html.html_safe
   end
 
-  def fullpaperdeadline(event)
+  def deadline(deadline)
     html = ""
-    if event.nofullpaper?
-      html << ""
-    elsif event.fullpaperdeadline < Date.today
-      html << "<time datetime='#{event.fullpaperdeadline.to_time.iso8601}'>"
-      html << "#{event.fullpaperdeadline.strftime("%e. %b %Y")}"
+    if deadline < Date.today
+      html << "<time class='datetime' datetime='#{deadline.to_time.iso8601}'>"
+      html << "#{deadline.strftime("%e. %b %Y")}"
       html << "</time>"
     else
-      html << "<time datetime='#{event.fullpaperdeadline.to_time.iso8601}'>"
-      html << "#{event.fullpaperdeadline.strftime("%e. %b %Y")}"
+      html << "<time class='datetime' datetime='#{deadline.to_time.iso8601}'>"
+      html << "#{deadline.strftime("%e. %b %Y")}"
       html << "</time>"
-      html << " (#{distance_of_time_in_words_to_now(event.fullpaperdeadline)} left)"
-    end
-    html.html_safe
-  end
-
-  def precisdeadline(event)
-    html = ""
-    if event.noprecis?
-      html << ""
-    elsif event.precisdeadline < Date.today
-      html << "<time datetime='#{event.precisdeadline.to_time.iso8601}'>"
-      html << "#{event.precisdeadline.strftime("%e. %b %Y")}"
-      html << "</time>"
-    else
-      html << "<time datetime='#{event.precisdeadline.to_time.iso8601}'>"
-      html << "#{event.precisdeadline.strftime("%e. %b %Y")}"
-      html << "</time>"
-      html << " (#{distance_of_time_in_words_to_now(event.precisdeadline)} left)"
+      html << " (#{distance_of_time_in_words_to_now(deadline)} left)"
     end
     html.html_safe
   end
@@ -64,7 +45,7 @@ module EventsHelper
     html = ""
     if deadline.to_date < Date.today
       html << ' <i class="fa fa-lock"><span class="sr-only">closed</span></i> '
-    elsif deadline.to_date > Date.today - 14
+    elsif deadline.to_date < Date.today + 64
       html << ' <i class="fa fa-exclamation-triangle" ' + deadline_color(deadline) + '><span class="sr-only">imminent</span></i> '
     end
     html.html_safe
@@ -74,7 +55,7 @@ module EventsHelper
     html = ""
     if deadline.to_date < Date.today
       html << 'class="closed"'
-    elsif deadline.to_date > Date.today - 14
+    elsif deadline.to_date < Date.today + 14
       html << 'class="imminent"'
     end
     html.html_safe

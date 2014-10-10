@@ -11,10 +11,11 @@
 </div>
 
 <div class="row">
+    <h1><%= @event.name %></h1>
+    <h2><%= @event.nameLong %> </h2>
+    <h3><%= duration(@event) %></h3>
     <p>
-        <h1><%= @event.name %></h1>
-        <h2><%= @event.nameLong %> </h2>
-        <h3><%= duration(@event) %></h3>
+        <i class="fa fa-globe"></i> <%= link_to @event.conferenceurl %>
     </p>
 </div>
 
@@ -22,10 +23,22 @@
     <div class="col-md-5">
         <dl class="dl-horizontal">
             <dt>Precis deadline</dt>
-            <dd><%= precisdeadline(@event) %></dd>
+            <dd <%= deadline_class(@event.precisdeadline) %>>
+            <% if !@event.noprecis? %>
+                <%= deadline(@event.precisdeadline) %><%= deadline_icon(@event.precisdeadline) %>
+            <% else %>
+                none
+            <% end %>
+            </dd>
 
             <dt>Full-paper deadline</dt>
-            <dd><%= fullpaperdeadline(@event) %></dd>
+            <dd <%= deadline_class(@event.fullpaperdeadline) %>>
+            <% if !@event.nofullpaper? %>
+                <%= deadline(@event.fullpaperdeadline) %><%= deadline_icon(@event.fullpaperdeadline) %>
+            <% else %>
+                none
+            <% end %>
+            </dd>
 
             <dt>H-Index</dt>
             <dd><%= @event.hindex %></dd>

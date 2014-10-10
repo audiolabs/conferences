@@ -21,4 +21,7 @@ jQuery(document).ready(function($) {
     $('time').each(function() {
         $(this).html(moment($(this).attr("datetime")).format('D. MMM YY'));
     });
+    $('time.datetime').each(function() {
+        $(this).html(moment($(this).attr("datetime")).format('D. MMM YY HH:mm'));
+    });
 })

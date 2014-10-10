@@ -14,7 +14,7 @@
 
 <% @past.each do |event| %>
   <tr>
-    <td><%= link_to event.name, event.conferenceurl %></td>
+	<td><%= link_to truncate(event.name, :length => 20), event, :title => event.nameLong %> <%= ispeerreviewed(event) %>
     <td><%= duration(event) %></td>
 	<td></td>
 	<td></td>
