@@ -15,7 +15,7 @@
     <h2><%= @event.nameLong %> </h2>
     <h3><%= duration(@event) %></h3>
     <p>
-        <i class="fa fa-globe"></i> <%= link_to @event.conferenceurl %>
+        <i class="fa fa-globe"></i> <%= link_to @event.conferenceurl, @event.conferenceurl %>
     </p>
 </div>
 
