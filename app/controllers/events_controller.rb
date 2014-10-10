@@ -3,11 +3,11 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @nextByDeadline = Event.nextByDeadline
-    
+
     if params[:tag]
       @events = Event.tagged_with(params[:tag]).where("eventend > ?", Time.now).sort_by(&:closestDeadline)
     else
-      @events = Event.where("eventend > ?", Time.now).sort_by(&:closestDeadline)      
+      @events = Event.where("eventend > ?", Time.now).sort_by(&:closestDeadline)
     end
     @currentlocation = Geocoder.search(request.ip)
     respond_to do |format|
@@ -16,32 +16,32 @@ class EventsController < ApplicationController
       format.json { render json: @allevents.to_json(:only => [:id, :name, :startdate, :latitude, :longitude])  }
     end
   end
-  
+
   # GET /events
   # GET /events.json
   def archive
     if params[:tag]
       @past = Event.tagged_with(params[:tag]).where("eventend <= ?", Time.now).paginate(:page => params[:past_page], :per_page => 20).order(:eventend).reverse_order
     else
-      @past = Event.where("eventend <= ?", Time.now).paginate(:page => params[:past_page], :per_page => 20).order(:eventend).reverse_order  
+      @past = Event.where("eventend <= ?", Time.now).paginate(:page => params[:past_page], :per_page => 20).order(:eventend).reverse_order
     end
     respond_to do |format|
       format.html # archive.html.erb
       format.json { render json: @allevents.to_json(:only => [:id, :name, :startdate, :latitude, :longitude])  }
     end
   end
-  
+
 
   def generate_ical_overview
-    cal = Icalendar::Calendar.new 
+    cal = Icalendar::Calendar.new
     @events.each do |e|
       # conference event
       event = Icalendar::Event.new
       event.dtstart = e.eventstart
-      event.dtstart.ical_params = { "VALUE" => "DATE" }      
+      event.dtstart.ical_params = { "VALUE" => "DATE" }
       event.dtend   = (e.eventend+1)
-      event.dtend.ical_params = { "VALUE" => "DATE" , "TZID" => "Europe/London" }
-      
+      event.dtend.ical_params = { "VALUE" => "DATE" , "TZID" => "UTC" }
+
       event.summary = e.name
       event.location = "#{e.city}, #{e.country}"
       event.url = e.conferenceurl
@@ -53,14 +53,14 @@ class EventsController < ApplicationController
   end
 
   def generate_ical_overview_including_deadlines
-    cal = Icalendar::Calendar.new 
+    cal = Icalendar::Calendar.new
     @events.each do |e|
       # conference event
       event = Icalendar::Event.new
       event.dtstart = e.eventstart
-      event.dtstart.ical_params = { "VALUE" => "DATE" }      
+      event.dtstart.ical_params = { "VALUE" => "DATE" }
       event.dtend   = (e.eventend+1)
-      event.dtend.ical_params = { "VALUE" => "DATE" , "TZID" => "Europe/London" }
+      event.dtend.ical_params = { "VALUE" => "DATE" , "TZID" => "UTC" }
       event.summary = e.name
       event.location = "#{e.city}, #{e.country}"
       event.url = e.conferenceurl
@@ -105,14 +105,14 @@ class EventsController < ApplicationController
       format.json { render json: @event }
     end
   end
-  
+
   def generate_ical_event
-    cal = Icalendar::Calendar.new 
+    cal = Icalendar::Calendar.new
     event = Icalendar::Event.new
     event.dtstart = @event.eventstart
-    event.dtstart.ical_params = { "VALUE" => "DATE" }      
+    event.dtstart.ical_params = { "VALUE" => "DATE" }
     event.dtend   = (@event.eventend+1)
-    event.dtend.ical_params = { "VALUE" => "DATE" , "TZID" => "Europe/London" }
+    event.dtend.ical_params = { "VALUE" => "DATE" , "TZID" => "UTC" }
     event.summary = @event.name
     event.location = "#{@event.city}, #{@event.country}"
     event.url = @event.conferenceurl
@@ -125,7 +125,7 @@ class EventsController < ApplicationController
     cal.publish
     cal.to_ical
   end
-  
+
 
   # GET /events/new
   # GET /events/new.json
@@ -150,7 +150,7 @@ class EventsController < ApplicationController
     respond_to do |format|
       if @event.save
         EventMailer.new_event(@event).deliver
-        
+
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render json: @event, status: :created, location: @event }
       else
