@@ -18,7 +18,11 @@
 
 <% @events.each do |event| %>
   <tr>
-	<td><%= link_to truncate(event.name, :length => 20), event, :title => event.nameLong %> <%= ispeerreviewed(event) %>
+	<td>
+        <% if event.eventstart <= Date.today and event.eventend >= Date.today %>
+            <i class="fa fa-cog fa-spin conference-active"></i>
+        <% end %>
+        <%= link_to truncate(event.name, :length => 20), event, :title => event.nameLong %> <%= ispeerreviewed(event) %>
 	</td>
 	
 	<td>
