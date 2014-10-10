@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141010111624) do
+ActiveRecord::Schema.define(version: 20141010114656) do
 
   create_table "attendances", force: true do |t|
     t.string   "name"
@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(version: 20141010111624) do
     t.boolean  "peerreviewed"
     t.date     "eventstart"
     t.date     "eventend"
-    t.date     "precisdeadline"
-    t.date     "fullpaperdeadline"
+    t.datetime "precisdeadline"
+    t.datetime "fullpaperdeadline"
     t.string   "city"
     t.string   "country"
     t.float    "latitude"

@@ -13,22 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= bootstrap.min
+//= moment-with-locales.min
 //= require_tree . 
 //= require bootstrap-tagsinput
 
 jQuery(document).ready(function($) {
-    $('#precisdeadline_tba').live('change', function() {
-		if($(this).is(":checked")) {
-			$("#precis_date").fadeTo("slow",0);
-	    } else {
-	        $('#precis_date').fadeTo("slow",255);
-	    }
-	});
-	$('#fullpaperdeadline_tba').live('change', function() {
-		if($(this).is(":checked")) {
-			$("#fullpaper_date").fadeTo("slow",0);
-	    } else {
-	        $('#fullpaper_date').fadeTo("slow",255);
-	    }
-	});
+    $('time').each(function() {
+        $(this).html(moment($(this).attr("datetime")).format('D. MMM YY'));
+    });
 })

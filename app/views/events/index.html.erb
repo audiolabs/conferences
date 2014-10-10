@@ -35,21 +35,12 @@
 		</div>
 	</td>
     <td><%= duration(event) %></td>
-<% if event.precisdeadline < Date.today %>
-	<td style="text-decoration: line-through;"><%= precisdeadline(event) %></td>
-<% else %>
-	<td <%= daysleft_to_color(event.precisdeadline) %>>
-		<%= precisdeadline(event) %>		
+	<td <%= deadline_class(event.precisdeadline) %>>
+		<%= precisdeadline(event) %><%= deadline_icon(event.precisdeadline) %>
 	</td>
-<% end %>
-
-<% if event.fullpaperdeadline < Date.today %>
-	<td style="text-decoration: line-through;"><%= fullpaperdeadline(event) %></td>
-<% else %>
-	<td <%= daysleft_to_color(event.fullpaperdeadline) %>>
-		<%= fullpaperdeadline(event) %>
+	<td <%= deadline_class(event.fullpaperdeadline) %>>
+		<%= fullpaperdeadline(event) %><%= deadline_icon(event.fullpaperdeadline) %>
 	</td>
-<% end %>
     <td><%= truncate(event.address, :length => 20) %></td>
 	<td><span class="badge"><%= event.attendances.count  %></span></td>
     <td>
