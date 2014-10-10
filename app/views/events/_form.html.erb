@@ -41,11 +41,11 @@
                 <%= f.check_box :peerreviewed, :id => 'peerreviewed' %> <%= f.label "is peer reviewed" %>
             </div>
         </div>
-    </div>   
+    </div>
     <div class="form-group">
         <%= f.label "H-Index", class: "col-sm-4 control-label" %>
         <div class="col-sm-6">
-            <%= f.text_field :hindex, :class => 'form-control', :type => 'number'   %> 
+            <%= f.text_field :hindex, :class => 'form-control', :type => 'number'   %>
         </div>
     </div>
     <div class="form-group">
@@ -61,25 +61,25 @@
         </div>
     </div>
     <div class="form-group">
-        <%= f.label "Precis Deadline", class: "col-sm-4 control-label" %>
+        <%= f.label "Precis Deadline (UTC)", class: "col-sm-4 control-label" %>
         <div class="col-sm-6">
-            <%= f.check_box :precisdeadline_tba, :id => 'precisdeadline_tba' %> no precis/tba 
-            <span id="precis_date" <% if @event.precisdeadline_tba == true %> style="display:none" <% end %> ><%= f.date_select :precisdeadline %></span>
+            <%= f.check_box :precisdeadline_tba, :id => 'precisdeadline_tba' %> no precis/tba
+            <span id="precis_date" <% if @event.precisdeadline_tba == true %> style="display:none" <% end %> ><%= f.datetime_select :precisdeadline %></span>
         </div>
     </div>
     <div class="form-group">
-        <%= f.label "Full Paper Deadline", class: "col-sm-4 control-label"  %>
+        <%= f.label "Full Paper Deadline (UTC)", class: "col-sm-4 control-label"  %>
         <div class="col-sm-6">
             <%= f.check_box :fullpaperdeadline_tba, :id => 'fullpaperdeadline_tba' %> no fullpaper/tba
-            <span id="fullpaper_date" <% if @event.fullpaperdeadline_tba == true %> style="display:none" <% end %> ><%= f.date_select :fullpaperdeadline %></span>
+            <span id="fullpaper_date" <% if @event.fullpaperdeadline_tba == true %> style="display:none" <% end %> ><%= f.datetime_select :fullpaperdeadline %></span>
         </div>
     </div>
     <div  class="form-group">
         <%= f.label :country, "Country", class: "col-sm-4 control-label"  %>
         <div class="col-sm-6">
-            <%= f.country_select :country, ["Great Britain", "United States", "Germany", "France"], html: {:class=>'some-class'} %>  
+            <%= f.country_select :country, ["Great Britain", "United States", "Germany", "France"], html: {:class=>'some-class'} %>
         </div>
-    </div>	
+    </div>
     <div class="form-group">
         <%= f.label :city, class: "col-sm-4 control-label"  %>
         <div class="col-sm-6">
