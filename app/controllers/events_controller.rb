@@ -38,7 +38,7 @@ class EventsController < ApplicationController
       # conference event
       event = Icalendar::Event.new
       event.dtstart = e.eventstart
-      event.dtstart.ical_params = { "VALUE" => "DATE" }
+      event.dtstart.ical_params = { "VALUE" => "DATE" , "TZID" => "UTC" }
       event.dtend   = (e.eventend+1)
       event.dtend.ical_params = { "VALUE" => "DATE" , "TZID" => "UTC" }
 
@@ -58,7 +58,7 @@ class EventsController < ApplicationController
       # conference event
       event = Icalendar::Event.new
       event.dtstart = e.eventstart
-      event.dtstart.ical_params = { "VALUE" => "DATE" }
+      event.dtstart.ical_params = { "VALUE" => "DATE" , "TZID" => "UTC" }
       event.dtend   = (e.eventend+1)
       event.dtend.ical_params = { "VALUE" => "DATE" , "TZID" => "UTC" }
       event.summary = e.name
@@ -69,6 +69,7 @@ class EventsController < ApplicationController
       unless e.noprecis?
         precis = Icalendar::Event.new
         precis.dtstart = e.precisdeadline
+        precis.dtstart.ical_params = { "TZID" => "UTC" }
         precis.summary = "[Deadline] #{e.name} (Abstract/Precis)"
         precis.location = "#{e.city}, #{e.country}"
         precis.url = e.callforpapersurl
@@ -78,6 +79,7 @@ class EventsController < ApplicationController
       unless e.nofullpaper?
         paper = Icalendar::Event.new
         paper.dtstart = e.fullpaperdeadline
+        paper.dtstart.ical_params = { "TZID" => "UTC" }
         paper.summary = "[Deadline] #{e.name} (Paper)"
         paper.location = "#{e.city}, #{e.country}"
         paper.url = e.callforpapersurl
