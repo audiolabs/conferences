@@ -2,7 +2,7 @@
 
 <h2>Past Conferences</h2>
 
-<table class="conferencetable">
+<table class="table table-hover">
   <tr>
     <th>Name</th>
     <th>Date</th>
@@ -19,9 +19,18 @@
 	<td></td>
 	<td></td>
     <td><%= event.address %></td>
-    <td style="float:right"><%= link_to 'Details', event, :class => "tiny_button" %>
-    <%= link_to 'Edit', edit_event_path(event), :class => "tiny_button" %>
-    <%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' }, :class => "tiny_button_red"%></td>
+    <td>
+		<div class="btn-toolbar" role="toolbar">
+	      <div class="btn-group-xs">
+			<%= link_to edit_event_path(event), class: "btn btn-default" do %>
+			    <i class="glyphicon glyphicon-pencil"></i>
+			<% end %>
+			<%= link_to event, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger" do %>
+			    <i class="glyphicon glyphicon-trash"></i>
+			<% end %>
+	      </div>
+	    </div>
+	</td>
   </tr>
 <% end %>
 
