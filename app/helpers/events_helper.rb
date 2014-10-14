@@ -35,10 +35,11 @@ module EventsHelper
   def ispeerreviewed(event)
     html = ""
     if event.peerreviewed?
-      html << "(P)"
+      html << ' <i class="fa fa-eye"><span class="sr-only">peer reviewed</span></i> '
     else
-      html << ""
+      html << ''
     end
+    html.html_safe
   end
    
   def deadline_icon(deadline)
