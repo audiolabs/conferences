@@ -6,6 +6,8 @@ Conferences::Application.routes.draw do
   end
 
   get '/', to: 'events#index'
+  root to: 'events#index'
+  
   get 'archive', to: 'events#archive'
   
   # The priority is based upon order of creation:
