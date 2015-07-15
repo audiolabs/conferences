@@ -1,5 +1,7 @@
 <%= content_for :body_attributes %>
 
+<div id="map" style="height: 40em;"></div>
+
 <h2>Past Conferences</h2>
 
 <table class="table table-hover">
@@ -39,4 +41,27 @@
 	<%= will_paginate @past, :param_name => 'past_page' %>
 </div>
 
-<br />
+
+<script src="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.js"></script>
+
+<script type="text/javascript">
+    var map = L.map('map');
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 12,
+        minZoom: 2
+    }).addTo(map);
+
+    map.on('locationfound', function(position) {
+        map.setView([20.0, position.longitude], 2);
+    });
+    map.on('locationerror', function(position) {
+        map.setView([20.0, -0.09], 2);
+    });
+    map.locate({setView: false, maxZoom: 16});
+
+    <% @past.each do |event| %>
+        L.marker([<%= event.latitude %>, <%= event.longitude %>]).addTo(map).bindPopup(
+            "<%= escape_javascript link_to truncate(event.name, :length => 20), event, :title => event.nameLong %>"
+        )
+    <% end %>
+</script>

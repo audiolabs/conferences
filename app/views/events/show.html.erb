@@ -60,9 +60,7 @@
         </dl>
     </div>
     <div class="col-md-7">
-        <p>
-            <%= image_tag "http://maps.google.com/maps/api/staticmap?size=900x500&sensor=false&zoom=4&markers=#{@event.latitude}%2C#{@event.longitude}" %>
-        </p>
+        <div id="map" style="height: 40em;"></div>
     </div>
 </div>
 
@@ -165,3 +163,15 @@
         </div>
     <% end %>
 </div>
+
+<script src="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.js"></script>
+
+<script type="text/javascript">
+    var map = L.map('map').setView([<%= @event.latitude %>, <%= @event.longitude %>], 6);
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 12,
+        minZoom: 2
+    }).addTo(map);
+
+    L.marker([<%= @event.latitude %>, <%= @event.longitude %>]).addTo(map)
+</script>
