@@ -75,26 +75,26 @@
   <% end %>
 </div>
 
-<script src="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.js"></script>
+<% content_for :javascript do %>
+    <script type="text/javascript">
+        var map = L.map('map');
+        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 12,
+            minZoom: 2
+        }).addTo(map);
 
-<script type="text/javascript">
-    var map = L.map('map');
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 12,
-        minZoom: 2
-    }).addTo(map);
+        map.on('locationfound', function(position) {
+            map.setView([20.0, position.longitude], 2);
+        });
+        map.on('locationerror', function(position) {
+            map.setView([20.0, -0.09], 2);
+        });
+        map.locate({setView: false, maxZoom: 16});
 
-    map.on('locationfound', function(position) {
-        map.setView([20.0, position.longitude], 2);
-    });
-    map.on('locationerror', function(position) {
-        map.setView([20.0, -0.09], 2);
-    });
-    map.locate({setView: false, maxZoom: 16});
-
-    <% @events.each do |event| %>
-        L.marker([<%= event.latitude %>, <%= event.longitude %>]).addTo(map).bindPopup(
-            "<%= escape_javascript link_to truncate(event.name, :length => 20), event, :title => event.nameLong %>"
-        )
-    <% end %>
-</script>
+        <% @events.each do |event| %>
+            L.marker([<%= event.latitude %>, <%= event.longitude %>]).addTo(map).bindPopup(
+                "<%= escape_javascript link_to truncate(event.name, :length => 20), event, :title => event.nameLong %>"
+            )
+        <% end %>
+    </script>
+<% end %>

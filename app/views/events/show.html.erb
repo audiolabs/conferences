@@ -90,7 +90,7 @@
                     <div class="btn-group-xs">
                     <%= link_to edit_event_attendance_path(@event,attendance), class: "btn btn-default" do %>
                     <span class="glyphicon glyphicon-pencil"></span>
-                    <% end %>  
+                    <% end %>
                     <%= link_to [attendance.event, attendance],
                         method: :delete, data: { confirm: 'Are you sure?' },
                         class: "btn btn-danger" do %>
@@ -124,7 +124,7 @@
             <div class="col-sm-offset-4 col-sm-4">
                 <div class="checkbox">
                     <label>
-                        <%= f.check_box :planningtosubmit %> Planning to submit a paper 
+                        <%= f.check_box :planningtosubmit %> Planning to submit a paper
                     </label>
                 </div>
             </div>
@@ -133,7 +133,7 @@
             <div class="col-sm-offset-4 col-sm-4">
                 <div class="checkbox">
                     <label>
-              <%= f.check_box :submitted %> Paper submitted 
+              <%= f.check_box :submitted %> Paper submitted
                     </label>
                 </div>
             </div>
@@ -142,7 +142,7 @@
             <div class="col-sm-offset-4 col-sm-4">
                 <div class="checkbox">
                     <label>
-              <%= f.check_box :accepted %> Paper accepted 
+              <%= f.check_box :accepted %> Paper accepted
                     </label>
                 </div>
             </div>
@@ -151,7 +151,7 @@
             <div class="col-sm-offset-4 col-sm-4">
                 <div class="checkbox">
                     <label>
-              <%= f.check_box :attending %> Attending Conference 
+              <%= f.check_box :attending %> Attending Conference
                     </label>
                 </div>
             </div>
@@ -164,14 +164,14 @@
     <% end %>
 </div>
 
-<script src="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.js"></script>
+<% content_for :javascript do %>
+    <script type="text/javascript">
+        var map = L.map('map').setView([<%= @event.latitude %>, <%= @event.longitude %>], 6);
+        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 12,
+            minZoom: 2
+        }).addTo(map);
 
-<script type="text/javascript">
-    var map = L.map('map').setView([<%= @event.latitude %>, <%= @event.longitude %>], 6);
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 12,
-        minZoom: 2
-    }).addTo(map);
-
-    L.marker([<%= @event.latitude %>, <%= @event.longitude %>]).addTo(map)
-</script>
+        L.marker([<%= @event.latitude %>, <%= @event.longitude %>]).addTo(map)
+    </script>
+<% end %>
