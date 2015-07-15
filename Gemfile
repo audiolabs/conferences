@@ -11,7 +11,6 @@ gem 'sqlite3'
 gem 'country_select'
 gem 'countries'
 
-
 # Delete `group :assets` and move these gems
 # (and any others) to the top level
 gem 'sass-rails', '~>4.0.0'
@@ -21,7 +20,6 @@ gem 'uglifier', '>=1.3.0'
 gem 'protected_attributes'
 gem 'jquery-rails'
 gem 'geocoder'
-gem 'gmaps4rails'
 gem 'icalendar'
 
 gem "therubyracer"
