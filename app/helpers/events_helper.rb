@@ -34,8 +34,8 @@ module EventsHelper
 
   def ispeerreviewed(event)
     html = ""
-    if event.peerreviewed?
-      html << ' <i class="fa fa-eye"><span class="sr-only">peer reviewed</span></i> '
+    if not event.peerreviewed?
+      html << ' <i class="fa fa-eye-slash" title="not peer reviewed"><span class="sr-only">not peer reviewed</span></i> '
     else
       html << ''
     end
