@@ -58,14 +58,17 @@
         });
         map.locate({setView: false, maxZoom: 16});
 
-        <% @past.each do |event| %>
+        <% @all_past.each do |event| %>
             <%#
                 Place markers one revolution left and right to its location
                 so when your view is centered on Japan you will see the markers
                 in the US too.
              %>
             <% [-360, 0, 360].each do |rotation| %>
-                L.marker([<%= event.latitude %>, <%= event.longitude + rotation %>]).addTo(map).bindPopup(
+                L.marker(
+                    [<%= event.latitude %>, <%= event.longitude + rotation %>],
+                    {riseOnHover: true, opacity: 0.5}
+                ).addTo(map).bindPopup(
                     "<%= escape_javascript link_to truncate(event.name, :length => 20), event, :title => event.nameLong %>"
                 )
             <% end %>

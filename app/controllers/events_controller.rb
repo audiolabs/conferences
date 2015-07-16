@@ -25,6 +25,7 @@ class EventsController < ApplicationController
     else
       @past = Event.where("eventend <= ?", Time.now).paginate(:page => params[:past_page], :per_page => 20).order(:eventend).reverse_order
     end
+    @all_past = Event.where("eventend <= ?", Time.now)
     respond_to do |format|
       format.html # archive.html.erb
       format.json { render json: @allevents.to_json(:only => [:id, :name, :startdate, :latitude, :longitude])  }
