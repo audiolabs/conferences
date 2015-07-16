@@ -44,6 +44,7 @@
 <% content_for :javascript do %>
     <script type="text/javascript">
         var map = L.map('map');
+        map.scrollWheelZoom.disable();
         L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 12,
             minZoom: 2
