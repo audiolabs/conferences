@@ -81,10 +81,10 @@
         <tr>
             <td><%= attendance.name %></td>
 
-            <td><%= check_box_tag '', attendance.id, attendance.planningtosubmit , disabled: true %></td>
-            <td><%= check_box_tag '', attendance.id, attendance.submitted , disabled: true %></td>
-            <td><%= check_box_tag '', attendance.id, attendance.accepted , disabled: true %></td>
-            <td><%= check_box_tag '', attendance.id, attendance.attending , disabled: true %></td>
+            <td><%= checkbox(attendance.planningtosubmit) %></td>
+            <td><%= checkbox(attendance.submitted) %></td>
+            <td><%= checkbox(attendance.accepted) %></td>
+            <td><%= checkbox(attendance.attending) %></td>
             <td>
                 <div class="btn-toolbar pull-right" role="toolbar">
                     <div class="btn-group-xs">

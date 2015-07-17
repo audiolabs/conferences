@@ -67,4 +67,13 @@ module EventsHelper
     html << 'style=color:rgb(' + ((deadline.to_date - Date.today).to_i*-(255/90)+255).to_s + ',0,0)'
   end
 
+  def checkbox(attribute)
+    html = ""
+    if attribute
+      html << ' <i class="fa fa-check-square" title="yes"><span class="sr-only">yes</span></i> '
+    else
+      html << ' <i class="fa fa-square-o" title="no"><span class="sr-only">no</span></i> '
+    end
+    html.html_safe
+  end
 end
