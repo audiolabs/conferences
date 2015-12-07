@@ -38,10 +38,10 @@ class EventsController < ApplicationController
     @events.each do |e|
       # conference event
       event = Icalendar::Event.new
-      event.dtstart = e.eventstart
-      event.dtstart.ical_params = { "VALUE" => "DATE" , "TZID" => "UTC" }
-      event.dtend   = (e.eventend+1)
-      event.dtend.ical_params = { "VALUE" => "DATE" , "TZID" => "UTC" }
+      event.dtstart = Icalendar::Values::Date.new(e.eventstart.strftime("%Y%m%d"))
+      event.dtstart.ical_params = { "TZID" => "UTC" }
+      event.dtend   = Icalendar::Values::Date.new((e.eventend+1).strftime("%Y%m%d"))
+      event.dtend.ical_params = { "TZID" => "UTC" }
 
       event.summary = e.name
       event.location = "#{e.city}, #{e.country}"
@@ -58,10 +58,10 @@ class EventsController < ApplicationController
     @events.each do |e|
       # conference event
       event = Icalendar::Event.new
-      event.dtstart = e.eventstart
-      event.dtstart.ical_params = { "VALUE" => "DATE" , "TZID" => "UTC" }
-      event.dtend   = (e.eventend+1)
-      event.dtend.ical_params = { "VALUE" => "DATE" , "TZID" => "UTC" }
+      event.dtstart = Icalendar::Values::Date.new(e.eventstart.strftime("%Y%m%d"))
+      event.dtstart.ical_params = { "TZID" => "UTC" }
+      event.dtend   = Icalendar::Values::Date.new((e.eventend+1).strftime("%Y%m%d"))
+      event.dtend.ical_params = { "TZID" => "UTC" }
       event.summary = e.name
       event.location = "#{e.city}, #{e.country}"
       event.url = e.conferenceurl
@@ -112,14 +112,13 @@ class EventsController < ApplicationController
   def generate_ical_event
     cal = Icalendar::Calendar.new
     event = Icalendar::Event.new
-    event.dtstart = @event.eventstart
-    event.dtstart.ical_params = { "VALUE" => "DATE" }
-    event.dtend   = (@event.eventend+1)
-    event.dtend.ical_params = { "VALUE" => "DATE" , "TZID" => "UTC" }
+    event.dtstart = Icalendar::Values::Date.new(@event.eventstart.strftime("%Y%m%d"))
+    event.dtstart.ical_params = { "TZID" => "UTC" }
+    event.dtend   = Icalendar::Values::Date.new((@event.eventend+1).strftime("%Y%m%d"))
+    event.dtend.ical_params = { "TZID" => "UTC" }
     event.summary = @event.name
     event.location = "#{@event.city}, #{@event.country}"
     event.url = @event.conferenceurl
-
     event.alarm.summary =  "#{@event.name} is approaching"
     event.alarm.trigger =  "-P1" # 1 day before
 
