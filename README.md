@@ -5,13 +5,14 @@ A small ruby on rails applications that lists relevant research conferences wher
 
 ## Features
 
-* Add, Editing and listing conferences
+* Adding, editing and listing conferences
 * Sorting by deadline (abstract or fullpaper - whatever comes first)
+* Archive of conferences with in the past
 * iCalendar support for all conferences or just single events
 * Tag support (search by tags, tag cloud)
-* Show the conference on Google Maps
+* Show the conference on Open Street Maps
 * Add collegues who also plan to submit, were accepted, attend the conference
-* "I feel lucky to publish" looking for the next conference which is takes submissions. 
+* "I feel lucky to publish" looking for the next conference open to take submissions.
 
 ## Requirements
 
@@ -20,4 +21,6 @@ A small ruby on rails applications that lists relevant research conferences wher
 
 ## Installation
 
-On *Unix* Systems (assuming you have rvm installed). A simple **bundle install** should install all the ruby requirements. Also Rails 4.1 requires a config/secrets.yml which contains a secret key. You can generate a new key by using **rake secret**
+On *Unix* Systems (assuming you have rvm installed): ```bundle install``` should install all the ruby requirements. Also Rails 4.1 requires a ```config/secrets.yml``` which contains a secret key. You can generate a new key by using ```rake secret```
+
+To customize/brand the conference app just create/edit ```config/config.yaml``` and change ```institute_name``` to your institute
